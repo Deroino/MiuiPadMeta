@@ -1,21 +1,21 @@
 # MiuiPadMeta
 
-为MIUI设备恢复键盘Meta/Win键功能（禁用掉小米的快捷键），同时禁用Alt-Tab快捷键。这样就可以在远程桌面里用Meta键和Alt-Tab了。适配小米平板5系列以及Android12+的MIUI手机。
+为MIUI设备恢复键盘Meta/Win键功能（禁用掉小米的快捷键），同时禁用Alt-Tab和Command+Tab快捷键。这样就可以在远程桌面里用Meta键、Alt-Tab和Command+Tab了。适配小米平板5系列以及Android12+的MIUI手机。
 
-Restore Meta/Win key function on MIUI devices(disable Xiaomi hotkeys), and disable Alt-Tab hotkey. Allows you to use Meta and Alt-Tab key in Remote Desktop。Adapted for Xiaomi Pad 5 Series and MIUI phones with Android12+.
+Restore Meta/Win key function on MIUI devices(disable Xiaomi hotkeys), and disable Alt-Tab and Command+Tab hotkeys. Allows you to use Meta, Alt-Tab and Command+Tab key in Remote Desktop。Adapted for Xiaomi Pad 5 Series and MIUI phones with Android12+.
 
 
 
 ### 系统版本支持情况 OS version support
 
-| 系统版本           | 恢复Meta键 | 禁用Alt-Tab |
-| ------------------ | ---------- | ----------- |
-| MIUI12.5 Android11 | ? *         | ?           |
-| MIUI13 Android11   | √ **         | √           |
-| MIUI13 Android12   | √          | √           |
-| MIUI14 Android13   | √          | √           |
-| HyperOS         | √? ****       | √? ***        |
-| 非MIUI系统         | N/A        | ? ***        |
+| 系统版本           | 恢复Meta键 | 禁用Alt-Tab | 禁用Command+Tab |
+| ------------------ | ---------- | ----------- | --------------- |
+| MIUI12.5 Android11 | ? *         | ?           | ?               |
+| MIUI13 Android11   | √ **         | √           | √               |
+| MIUI13 Android12   | √          | √           | √               |
+| MIUI14 Android13   | √          | √           | √               |
+| HyperOS         | √? ****       | √? ***        | √? ***          |
+| 非MIUI系统         | N/A        | ? ***        | ? ***           |
 
 √ 表示经过测试，目前支持
 
@@ -72,9 +72,9 @@ Restore Meta/Win key function on MIUI devices(disable Xiaomi hotkeys), and disab
 
    实现方法：自定义类重写List的contains方法 替换掉`static List<String> sDeliveMetaKeyAppList`
 
-3. 修改逻辑禁用安卓自带的alt-tab
+3. 修改逻辑禁用安卓自带的alt-tab和command-tab
 
-   实现方法：hook `com.android.server.policy.PhoneWindowManager.interceptKeyBeforeDispatching` 如果是Alt-Tab则不继续运行
+   实现方法：hook `com.android.server.policy.PhoneWindowManager.interceptKeyBeforeDispatching` 如果是Alt-Tab或Command+Tab则不继续运行
 
 #### Android12
 
@@ -84,7 +84,7 @@ Restore Meta/Win key function on MIUI devices(disable Xiaomi hotkeys), and disab
 
 2. 存在`com.android.server.policy.PhoneWindowManagerStubImpl.DELIVE_META_APPS` 被`com.android.server.policy.PhoneWindowManagerStubImpl.interceptKeyWithMeta()`使用 但是这个函数P用没有
 
-   所以和alt-tab的实现方法一样：直接hook `com.android.server.policy.PhoneWindowManager.interceptKeyBeforeDispatching` 如果有按下meta键就直接返回0不拦截 简单粗暴
+   所以和alt-tab、command-tab的实现方法一样：直接hook `com.android.server.policy.PhoneWindowManager.interceptKeyBeforeDispatching` 如果有按下meta键或alt-tab、command-tab就直接返回0不拦截 简单粗暴
 
 3. 同Android11
 

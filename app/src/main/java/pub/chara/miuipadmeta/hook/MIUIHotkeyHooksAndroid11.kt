@@ -8,7 +8,7 @@ import de.robv.android.xposed.XposedBridge
 object MIUIHotkeyHooksAndroid11 : BaseHook() {
     override fun init() {
         try {
-            //disable alt-tab
+            //disable alt-tab and command-tab
             //this works for any android version
             findMethod("com.android.server.policy.PhoneWindowManager") {
                 name == "interceptKeyBeforeDispatching"
@@ -17,6 +17,10 @@ object MIUIHotkeyHooksAndroid11 : BaseHook() {
                     val arg1: KeyEvent = param.args[1] as KeyEvent;
                     // alt-tab
                     if ((arg1.isAltPressed && arg1.keyCode == 61)) {
+                        param.result = 0L;
+                    }
+                    // command-tab (meta-tab)
+                    if ((arg1.isMetaPressed && arg1.keyCode == 61)) {
                         param.result = 0L;
                     }
                 }
