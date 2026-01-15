@@ -1,17 +1,32 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 34
+
+    namespace = "com.yifeplayte.maxmipadinput"
 
     defaultConfig {
-        applicationId = "pub.chara.miuipadmeta"
+        applicationId = "com.yifeplayte.maxmipadinput"
         minSdk = 30
-        targetSdk = 32
-        versionCode = 7
-        versionName = "2.4"
+        targetSdk = 34
+        versionCode = 22
+        versionName = "1.6.2"
+
+        applicationVariants.configureEach {
+            outputs.configureEach {
+                if (this is BaseVariantOutputImpl) {
+                    outputFileName = outputFileName.replace("app", rootProject.name)
+                        .replace(Regex("debug|release"), versionName)
+                }
+            }
+        }
     }
 
     buildTypes {
@@ -20,31 +35,45 @@ android {
             isMinifyEnabled = true
             proguardFiles("proguard-rules.pro")
         }
+        named("debug") {
+            versionNameSuffix = "-debug-" + DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+                .format(LocalDateTime.now())
+        }
     }
 
     androidResources {
-        additionalParameters("--allow-reserved-package-id", "--package-id", "0x45")
+        additionalParameters += "--allow-reserved-package-id"
+        additionalParameters += "--package-id"
+        additionalParameters += "0x45"
+        generateLocaleConfig = true
     }
 
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/**"
-            excludes += "/kotlin/**"
-            excludes += "/*.txt"
-            excludes += "/*.bin"
-        }
+    packaging.resources {
+        excludes += "/META-INF/**"
+        excludes += "/kotlin/**"
+        excludes += "/*.txt"
+        excludes += "/*.bin"
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
 dependencies {
-    implementation("com.github.kyuubiran:EzXHelper:0.9.2")
     compileOnly("de.robv.android.xposed:api:82")
+    implementation("com.github.kyuubiran:EzXHelper:2.1.1")
+    implementation("io.github.ranlee1:jpinyin:1.0.1")
+    implementation("me.zhanghai.android.appiconloader:appiconloader:1.5.0")
+    implementation("org.luckypray:dexkit:2.0.0")
+    implementation(project(":blockmiui"))
 }

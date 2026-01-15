@@ -1,4 +1,4 @@
-name: Build MiuiPadMeta Module
+name: Build MaxMiPad Module
 
 on:
   push:
