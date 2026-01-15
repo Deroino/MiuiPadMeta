@@ -1,10 +1,12 @@
 package com.yifeplayte.maxmipadinput.hook.utils
 
+import java.util.*
+
 /**
  * 假列表实现，用于绕过 MIUI 的 Meta 键白名单检查
  * 所有 contains() 检查都返回 true，isEmpty() 返回 false
  */
-class MetaKeyFakeList : List<Any?> {
+class MetaKeyFakeList : java.util.List<Any?> {
     override val size: Int = 0
     override fun isEmpty(): Boolean = false
     override fun contains(element: Any?): Boolean = true
@@ -15,7 +17,7 @@ class MetaKeyFakeList : List<Any?> {
     override fun iterator(): Iterator<Any?> = iteratorOf()
     override fun listIterator(): ListIterator<Any?> = iteratorOf()
     override fun listIterator(index: Int): ListIterator<Any?> = iteratorOf()
-    override fun subList(fromIndex: Int, toIndex: Int): List<Any?> = this
+    override fun subList(fromIndex: Int, toIndex: Int): java.util.List<Any?> = this
 
     override fun toArray(): Array<Any?> = emptyArray()
 
@@ -23,6 +25,17 @@ class MetaKeyFakeList : List<Any?> {
     override fun <T> toArray(array: Array<T>): Array<T> {
         return if (array.size >= 0) array else emptyArray<Any?>() as Array<T>
     }
+
+    override fun add(element: Any?): Boolean = true
+    override fun add(index: Int, element: Any?) {}
+    override fun addAll(index: Int, elements: Collection<Any?>): Boolean = false
+    override fun addAll(elements: Collection<Any?>): Boolean = false
+    override fun clear() {}
+    override fun remove(element: Any?): Boolean = false
+    override fun removeAt(index: Int): Any? = null
+    override fun removeAll(elements: Collection<Any?>): Boolean = false
+    override fun retainAll(elements: Collection<Any?>): Boolean = false
+    override fun set(index: Int, element: Any?): Any? = null
 
     private fun iteratorOf() = object : ListIterator<Any?> {
         override fun hasNext(): Boolean = false
