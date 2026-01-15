@@ -178,7 +178,7 @@ class MainPage : BasePage() {
                 textId = R.string.disable_fixed_orientation_scope,
                 tipsId = R.string.disable_fixed_orientation_scope_tips
             ) {
-                showFragment("DisableFixedOrientationPage")
+                activity.showFragment("DisableFixedOrientationPage")
             },
             dataBindingRecv = bindingDisableFixedOrientation.getRecv(1)
         )
