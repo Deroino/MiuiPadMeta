@@ -17,7 +17,9 @@ class MetaKeyFakeList : java.util.List<Any?> {
     override fun iterator(): MutableIterator<Any?> = iteratorOf()
     override fun listIterator(): MutableListIterator<Any?> = iteratorOf()
     override fun listIterator(index: Int): MutableListIterator<Any?> = iteratorOf()
-    override fun subList(fromIndex: Int, toIndex: Int): MutableList<Any?> = this
+
+    @Suppress("UNCHECKED_CAST")
+    override fun subList(fromIndex: Int, toIndex: Int): MutableList<Any?> = this as MutableList<Any?>
 
     override fun toArray(): Array<Any?> = emptyArray()
 
@@ -46,6 +48,6 @@ class MetaKeyFakeList : java.util.List<Any?> {
         override fun previousIndex(): Int = -1
         override fun add(element: Any?) {}
         override fun remove() {}
-        override fun set(element: Any?): Any? = null
+        override fun set(element: Any?) {}
     }
 }
