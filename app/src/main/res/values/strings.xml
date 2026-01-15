@@ -6,7 +6,7 @@
     <string name="disable_fixed_orientation">Disable fixed orientation</string>
     <string name="disable_fixed_orientation_scope">Disable fixed orientation scope</string>
     <string name="disable_fixed_orientation_scope_tips">Take effect after reboot</string>
-    <string name="disable_fixed_orientation_tips">Disable some app's fixed orientation</string>
+    <string name="disable_fixed_orientation_tips">Disable some app&apos;s fixed orientation</string>
     <string name="done">OK</string>
     <string name="enable_stylus_input_method">Remove Scribe bluetooth restriction</string>
     <string name="enable_stylus_input_method_tips">Make Scribe works without the need of bluetooth connection to official stylus</string>
