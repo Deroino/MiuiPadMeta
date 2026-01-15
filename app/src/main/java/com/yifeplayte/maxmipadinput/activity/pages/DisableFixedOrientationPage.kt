@@ -5,6 +5,6 @@ import cn.fkj233.ui.activity.annotation.BMPage
 import com.yifeplayte.maxmipadinput.R
 
 @SuppressLint("NonConstantResourceId")
-@BMPage(key = "DisableFixedOrientationPage", titleId = R.string.disable_fixed_orientation_scope)
+@BMPage
 class DisableFixedOrientationPage :
     BaseSelectApplicationsPage("should_disable_fixed_orientation_list")

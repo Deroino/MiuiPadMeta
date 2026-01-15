@@ -39,7 +39,7 @@ class MainActivity : MIUIActivity() {
 
     init {
         activity = this
-        registerPage(MainPage::class.java)
-        registerPage(DisableFixedOrientationPage::class.java)
+        registerPage(MainPage::class.java, "Main")
+        registerPage(DisableFixedOrientationPage::class.java, "DisableFixedOrientationPage")
     }
 }

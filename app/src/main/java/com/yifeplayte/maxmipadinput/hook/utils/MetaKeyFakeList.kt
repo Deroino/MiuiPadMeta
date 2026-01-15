@@ -1,5 +1,7 @@
 package com.yifeplayte.maxmipadinput.hook.utils
 
+import java.util.*
+
 /**
  * 假列表实现，用于绕过 MIUI 的 Meta 键白名单检查
  * 所有 contains() 检查都返回 true，isEmpty() 返回 false
@@ -17,16 +19,12 @@ class MetaKeyFakeList : List<Any?> {
     override fun listIterator(index: Int): ListIterator<Any?> = iteratorOf()
     override fun subList(fromIndex: Int, toIndex: Int): List<Any?> = this
 
-    override fun add(element: Any?): Boolean = throw UnsupportedOperationException()
-    override fun add(index: Int, element: Any?) = throw UnsupportedOperationException()
-    override fun addAll(index: Int, elements: Collection<Any?>): Boolean = throw UnsupportedOperationException()
-    override fun addAll(elements: Collection<Any?>): Boolean = throw UnsupportedOperationException()
-    override fun clear() = throw UnsupportedOperationException()
-    override fun remove(element: Any?): Boolean = throw UnsupportedOperationException()
-    override fun removeAt(index: Int): Any? = throw UnsupportedOperationException()
-    override fun removeAll(elements: Collection<Any?>): Boolean = throw UnsupportedOperationException()
-    override fun retainAll(elements: Collection<Any?>): Boolean = throw UnsupportedOperationException()
-    override fun set(index: Int, element: Any?): Any? = throw UnsupportedOperationException()
+    override fun <T> toArray(array: Array<out T>): Array<T> {
+        @Suppress("UNCHECKED_CAST")
+        return if (array.size >= 0) array else arrayOfNulls(0) as Array<T>
+    }
+
+    override fun toArray(): Array<Any?> = emptyArray()
 
     private fun iteratorOf() = object : ListIterator<Any?> {
         override fun hasNext(): Boolean = false
@@ -36,8 +34,4 @@ class MetaKeyFakeList : List<Any?> {
         override fun previous(): Any? = throw NoSuchElementException()
         override fun previousIndex(): Int = -1
     }
-
-    override fun toArray(): Array<Any?> = emptyArray()
-    override fun <T> toArray(array: Array<T>): Array<T> =
-        if (array.size >= 0) array else emptyArray()
 }
