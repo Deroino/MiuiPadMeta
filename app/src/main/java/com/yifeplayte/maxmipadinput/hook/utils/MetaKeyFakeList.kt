@@ -14,10 +14,10 @@ class MetaKeyFakeList : java.util.List<Any?> {
     override fun get(index: Int): Any? = null
     override fun indexOf(element: Any?): Int = 0
     override fun lastIndexOf(element: Any?): Int = 0
-    override fun iterator(): Iterator<Any?> = iteratorOf()
-    override fun listIterator(): ListIterator<Any?> = iteratorOf()
-    override fun listIterator(index: Int): ListIterator<Any?> = iteratorOf()
-    override fun subList(fromIndex: Int, toIndex: Int): java.util.List<Any?> = this
+    override fun iterator(): MutableIterator<Any?> = iteratorOf()
+    override fun listIterator(): MutableListIterator<Any?> = iteratorOf()
+    override fun listIterator(index: Int): MutableListIterator<Any?> = iteratorOf()
+    override fun subList(fromIndex: Int, toIndex: Int): MutableList<Any?> = this
 
     override fun toArray(): Array<Any?> = emptyArray()
 
@@ -32,17 +32,20 @@ class MetaKeyFakeList : java.util.List<Any?> {
     override fun addAll(elements: Collection<Any?>): Boolean = false
     override fun clear() {}
     override fun remove(element: Any?): Boolean = false
-    override fun removeAt(index: Int): Any? = null
+    override fun remove(index: Int): Any? = null
     override fun removeAll(elements: Collection<Any?>): Boolean = false
     override fun retainAll(elements: Collection<Any?>): Boolean = false
     override fun set(index: Int, element: Any?): Any? = null
 
-    private fun iteratorOf() = object : ListIterator<Any?> {
+    private fun iteratorOf() = object : MutableListIterator<Any?> {
         override fun hasNext(): Boolean = false
         override fun next(): Any? = throw NoSuchElementException()
         override fun hasPrevious(): Boolean = false
         override fun nextIndex(): Int = 0
         override fun previous(): Any? = throw NoSuchElementException()
         override fun previousIndex(): Int = -1
+        override fun add(element: Any?) {}
+        override fun remove() {}
+        override fun set(element: Any?): Any? = null
     }
 }
